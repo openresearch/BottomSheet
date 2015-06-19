@@ -18,7 +18,6 @@ package com.cocosw.bottomsheet;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -147,12 +146,12 @@ public class BottomSheet extends Dialog implements DialogInterface {
             }
 
             // check window flags
-            WindowManager.LayoutParams winParams = ((Activity) context).getWindow().getAttributes();
-
-            int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-            if ((winParams.flags & bits) != 0) {
-                mNavBarAvailable = true;
-            }
+//            WindowManager.LayoutParams winParams = ((Activity) context).getWindow().getAttributes();
+//
+//            int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+//            if ((winParams.flags & bits) != 0) {
+                mNavBarAvailable = false;
+//            }
 
             mSmallestWidthDp = getSmallestWidthDp(wm);
             if (mNavBarAvailable)
@@ -620,7 +619,7 @@ public class BottomSheet extends Dialog implements DialogInterface {
          *
          * @param context A Context for built BottomSheet.
          */
-        public Builder(@NonNull Activity context) {
+        public Builder(@NonNull Context context) {
             this(context, R.style.BottomSheet_Dialog);
             TypedArray ta = context.getTheme().obtainStyledAttributes(new int[]{R.attr.bottomSheetStyle});
             try {
