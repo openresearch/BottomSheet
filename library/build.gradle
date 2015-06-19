@@ -1,7 +1,28 @@
-apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/android-library.gradle'
-apply from: 'https://raw.githubusercontent.com/soarcn/gradle/master/maven_push.gradle'
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 22
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable false
+        }
+
+        debug {
+            minifyEnabled false
+            debuggable true
+        }
+    }
+}
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:22.1.1'
 }
 
