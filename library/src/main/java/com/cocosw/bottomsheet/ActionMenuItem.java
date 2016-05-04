@@ -22,7 +22,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v4.view.MenuItemCompat;
-import android.view.ActionProvider;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -208,7 +207,7 @@ import android.view.View;
      }
 
      public MenuItem setVisible(boolean visible) {
-         mFlags = (mFlags & HIDDEN) | (visible ? 0 : HIDDEN);
+         mFlags = (mFlags & ~HIDDEN) | (visible ? 0 : HIDDEN);
          return this;
      }
 

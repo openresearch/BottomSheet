@@ -16,10 +16,6 @@
 
 package com.cocosw.bottomsheet;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -27,18 +23,14 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.support.v4.internal.view.SupportMenu;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
-/**
- * @hide
- */
- class ActionMenu implements SupportMenu {
-    private Context mContext;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-    private boolean mIsQwerty;
-
+class ActionMenu implements SupportMenu {
     private static final int[] sCategoryToOrder = new int[]{
             1, /* No category */
             4, /* CONTAINER */
@@ -47,12 +39,44 @@ import android.view.SubMenu;
             2, /* ALTERNATIVE */
             0, /* SELECTED_ALTERNATIVE */
     };
-
+    private Context mContext;
+    private boolean mIsQwerty;
     private ArrayList<ActionMenuItem> mItems;
 
     public ActionMenu(Context context) {
         mContext = context;
         mItems = new ArrayList<>();
+    }
+
+    private static int findInsertIndex(ArrayList<ActionMenuItem> items, int ordering) {
+        for (int i = items.size() - 1; i >= 0; i--) {
+            ActionMenuItem item = items.get(i);
+            if (item.getOrder() <= ordering) {
+                return i + 1;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Returns the ordering across all items. This will grab the category from
+     * the upper bits, find out how to order the category with respect to other
+     * categories, and combine it with the lower bits.
+     *
+     * @param categoryOrder The category order for a particular item (if it has
+     *                      not been or/add with a category, the default category is
+     *                      assumed).
+     * @return An ordering integer that can be used to order this item across
+     * all the items (even from other categories).
+     */
+    private static int getOrdering(int categoryOrder) {
+        final int index = (categoryOrder & CATEGORY_MASK) >> CATEGORY_SHIFT;
+
+        if (index < 0 || index >= sCategoryToOrder.length) {
+            throw new IllegalArgumentException("order does not contain a valid category.");
+        }
+
+        return (sCategoryToOrder[index] << CATEGORY_SHIFT) | (categoryOrder & USER_MASK);
     }
 
     public Context getContext() {
@@ -78,41 +102,9 @@ import android.view.SubMenu;
         return item;
     }
 
-
-    private static int findInsertIndex(ArrayList<ActionMenuItem> items, int ordering) {
-        for (int i = items.size() - 1; i >= 0; i--) {
-            ActionMenuItem item = items.get(i);
-            if (item.getOrder() <= ordering) {
-                return i + 1;
-            }
-        }
-        return 0;
-    }
-
     MenuItem add(ActionMenuItem item) {
-        mItems.add(findInsertIndex(mItems, getOrdering(item.getOrder())),item);
+        mItems.add(findInsertIndex(mItems, getOrdering(item.getOrder())), item);
         return item;
-    }
-
-    /**
-     * Returns the ordering across all items. This will grab the category from
-     * the upper bits, find out how to order the category with respect to other
-     * categories, and combine it with the lower bits.
-     *
-     * @param categoryOrder The category order for a particular item (if it has
-     *            not been or/add with a category, the default category is
-     *            assumed).
-     * @return An ordering integer that can be used to order this item across
-     *         all the items (even from other categories).
-     */
-    private static int getOrdering(int categoryOrder) {
-        final int index = (categoryOrder & CATEGORY_MASK) >> CATEGORY_SHIFT;
-
-        if (index < 0 || index >= sCategoryToOrder.length) {
-            throw new IllegalArgumentException("order does not contain a valid category.");
-        }
-
-        return (sCategoryToOrder[index] << CATEGORY_SHIFT) | (categoryOrder & USER_MASK);
     }
 
     public int addIntentOptions(int groupId, int itemId, int order,
@@ -127,7 +119,7 @@ import android.view.SubMenu;
             removeGroup(groupId);
         }
 
-        for (int i=0; i<N; i++) {
+        for (int i = 0; i < N; i++) {
             final ResolveInfo ri = lri.get(i);
             Intent rintent = new Intent(
                     ri.specificIndex < 0 ? intent : specifics[ri.specificIndex]);
@@ -185,7 +177,12 @@ import android.view.SubMenu;
     }
 
     public MenuItem findItem(int id) {
-        return mItems.get(findItemIndex(id));
+        final int index = findItemIndex(id);
+        if (index < 0) {
+            return null;
+        }
+
+        return mItems.get(index);
     }
 
     public MenuItem getItem(int index) {
@@ -259,7 +256,12 @@ import android.view.SubMenu;
     }
 
     public void removeItem(int id) {
-        mItems.remove(findItemIndex(id));
+        final int index = findItemIndex(id);
+        if (index < 0) {
+            return;
+        }
+
+        mItems.remove(index);
     }
 
     public void setGroupCheckable(int group, boolean checkable,
@@ -310,7 +312,7 @@ import android.view.SubMenu;
 
     ActionMenu clone(int size) {
         ActionMenu out = new ActionMenu(getContext());
-        out.mItems = new ArrayList<>(this.mItems.subList(0,size));
+        out.mItems = new ArrayList<>(this.mItems.subList(0, size));
         return out;
     }
 
@@ -318,7 +320,7 @@ import android.view.SubMenu;
         Iterator<ActionMenuItem> iter = mItems.iterator();
         while (iter.hasNext()) {
             ActionMenuItem item = iter.next();
-                if (!item.isVisible()) iter.remove();
+            if (!item.isVisible()) iter.remove();
         }
     }
 }

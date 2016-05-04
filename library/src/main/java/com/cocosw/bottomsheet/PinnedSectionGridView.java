@@ -18,28 +18,14 @@ package com.cocosw.bottomsheet;
  */
 
 
-        import android.content.Context;
-        import android.database.DataSetObserver;
-        import android.graphics.Canvas;
-        import android.graphics.Color;
-        import android.graphics.PointF;
-        import android.graphics.Rect;
-        import android.graphics.drawable.GradientDrawable;
-        import android.graphics.drawable.GradientDrawable.Orientation;
-        import android.os.Parcelable;
-        import android.util.AttributeSet;
-        import android.view.MotionEvent;
-        import android.view.SoundEffectConstants;
-        import android.view.View;
-        import android.view.ViewConfiguration;
-        import android.view.accessibility.AccessibilityEvent;
-        import android.widget.AbsListView;
-        import android.widget.GridView;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.widget.GridView;
 
 /**
  * ListView capable to pin views at its top while the rest is still scrolled.
  */
- class PinnedSectionGridView extends GridView {
+class PinnedSectionGridView extends GridView {
 
 
     // -- class fields
@@ -61,6 +47,9 @@ package com.cocosw.bottomsheet;
         super(context, attrs, defStyleAttr);
     }
 
+    public int getNumColumns() {
+        return mNumColumns;
+    }
 
     @Override
     public void setNumColumns(int numColumns) {
@@ -68,8 +57,8 @@ package com.cocosw.bottomsheet;
         super.setNumColumns(numColumns);
     }
 
-    public int getNumColumns(){
-        return mNumColumns;
+    public int getHorizontalSpacing() {
+        return mHorizontalSpacing;
     }
 
     @Override
@@ -78,8 +67,8 @@ package com.cocosw.bottomsheet;
         super.setHorizontalSpacing(horizontalSpacing);
     }
 
-    public int getHorizontalSpacing(){
-        return mHorizontalSpacing;
+    public int getColumnWidth() {
+        return mColumnWidth;
     }
 
     @Override
@@ -88,11 +77,7 @@ package com.cocosw.bottomsheet;
         super.setColumnWidth(columnWidth);
     }
 
-    public int getColumnWidth(){
-        return mColumnWidth;
-    }
-
-    public int getAvailableWidth(){
+    public int getAvailableWidth() {
         return mAvailableWidth != 0 ? mAvailableWidth : getWidth();
     }
 

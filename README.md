@@ -2,6 +2,8 @@ BottomSheet
 =======
 [![Build Status](https://travis-ci.org/soarcn/BottomSheet.svg)](https://travis-ci.org/soarcn/BottomSheet) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-BottomSheet-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1044)
 
+**_Google introduced official bottomsheets implementation in Support library 23.2.0,thus this library is no longer activly being developed. I will continuely fix defects been found and accept good PR but No more new feature will be developed. Thanks for your support!_**
+
 One way to present a set of actions to a user is with bottom sheets, a sheet of paper that slides up from the bottom edge of the screen. Bottom sheets offer flexibility in the display of clear and simple actions that do not need explanation.
 
 https://www.google.com/design/spec/components/bottom-sheets.html
@@ -74,15 +76,15 @@ new BottomSheet.Builder(this).title("title").sheet(R.menu.list).listener(new Dia
 Action items manipulate
 ========
 
-You can get a menu object from bottomsheet instance from 1.1.0, and change it as you want, exactly like you manipulating android menu or actionbar actionitems.
-Please be aware that if you change the menu after showing the bottomsheet, you must call invalidate(), or no changes would be applied and your app might crash.
+You can get a menu object from bottomsheet instance from 1.1.0, and change it as you want, exactly like you're manipulating an android menu or actionbar actionitems.
+Please be aware that if you change the menu after showing the bottomsheet, you must call invalidate(), or no changes will be applied and your app might crash.
 Please check example application for more info.
 
 
 Style
 ========
 
-- Invoke darkTheme() to show build-in dark theme
+- Invoke darkTheme() to show the built-in dark theme
 - Or define your style in your application, and call bottomsheet by using new BottomSheet.Builder(this,R.style.BottomSheet_StyleDialog)....
 
 ```xml
@@ -102,7 +104,7 @@ Style
 
 ```xml
     <style name="StyleTheme" parent="Theme.AppCompat">
-        <item name="bottomSheetStyle">@style/BottomSheet.StyleDialog</item>
+        <item name="bs_bottomSheetStyle">@style/BottomSheet.StyleDialog</item>
     </style>
 ```
 
@@ -114,7 +116,7 @@ Contribute
 About me
 =======
 
-I'm Kai, an 32 years old android developer based in Sydney. I'm looking for a job right now, contact me if you think I can be of service to you. Thanks!
+I'm Kai, an 32 years old android developer based in Sydney.
 
 
 License
