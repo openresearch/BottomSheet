@@ -17,6 +17,7 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
 
     dependencies {
@@ -27,7 +28,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-      }
+        google()
+    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
@@ -36,7 +38,7 @@ allprojects {
 
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.5.0'
+    gradleVersion = '4.0.0'
 }
 
 
