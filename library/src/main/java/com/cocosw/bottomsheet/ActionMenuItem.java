@@ -21,9 +21,9 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.internal.view.SupportMenuItem;
-import android.support.v4.view.MenuItemCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.internal.view.SupportMenuItem;
+import androidx.core.view.MenuItemCompat;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -248,12 +248,12 @@ import android.view.View;
      }
 
      @Override
-     public android.support.v4.view.ActionProvider getSupportActionProvider() {
+     public androidx.core.view.ActionProvider getSupportActionProvider() {
          return null;
      }
 
      @Override
-     public SupportMenuItem setSupportActionProvider(android.support.v4.view.ActionProvider actionProvider) {
+     public SupportMenuItem setSupportActionProvider(androidx.core.view.ActionProvider actionProvider) {
          throw new UnsupportedOperationException();
      }
 
